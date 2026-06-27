@@ -818,6 +818,7 @@ if (currentStudent) {
     loadCGPA();
     loadArrears();
     updateCards();
+    calculateGPA();
 
 } else {
 
