@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="theme-color" content="#00ffff">
+
+<link rel="manifest" href="manifest.json">
+
+<link rel="icon" href="icons/icon-192.png">
+
+<title>Student Academic Portal</title>
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/dashboard.css">
+
+</head>
+
+<body>
+
+<!-- HERO SECTION -->
+
+<div class="hero">
+
+    <div class="overlay">
+
+        <h3>Welcome To</h3>
+
+        <h1>STUDENT ACADEMIC PORTAL</h1>
+
+        <p class="typing"></p>
+
+    </div>
+
+</div>
+
+<!-- LOGIN SCREEN -->
+
+<div id="loginScreen" class="container">
+
+    <div class="profile-card">
+
+        <h2>Student Login</h2>
+
+        <input
+        type="text"
+        id="loginRoll"
+        placeholder="Enter Roll Number">
+
+        <button onclick="loginStudent()">
+            Login
+        </button>
+
+    </div>
+
+</div>
+
+<!-- MAIN APP -->
+
+<div id="appContainer" style="display:none;">
+
+<div class="container">
+
+    <!-- PROFILE -->
+
+    <div class="profile-card">
+
+        <h2>Student Information</h2>
+
+        <input
+        type="text"
+        id="studentName"
+        placeholder="Student Name">
+
+        <input
+        type="text"
+        id="rollNo"
+        placeholder="Roll Number">
+
+        <button onclick="saveProfile()">
+            Save Profile
+        </button>
+
+        <button onclick="logout()">
+            Logout
+        </button>
+
+    </div>
+
+    <!-- DASHBOARD -->
+
+    <div class="stats-grid">
+
+        <div class="card">
+            <h3>Current CGPA</h3>
+            <p id="cgpaCard">0.00</p>
+        </div>
+
+        <div class="card">
+            <h3>Pending Arrears</h3>
+            <p id="arrearCard">0</p>
+        </div>
+
+        <div class="card">
+            <h3>Completed Semesters</h3>
+            <p id="semCard">0</p>
+        </div>
+
+        <div class="card">
+            <h3>Credits Earned</h3>
+            <p id="creditCard">0</p>
+        </div>
+
+    </div>
+
+    <hr>
+
+    <!-- GPA -->
+
+    <h2>Semester GPA Calculator</h2>
+
+    <select id="semester" onchange="loadSubjects()">
+
+        <option value="1">Semester 1</option>
+        <option value="2">Semester 2</option>
+        <option value="3">Semester 3</option>
+        <option value="4">Semester 4</option>
+        <option value="5">Semester 5</option>
+        <option value="6">Semester 6</option>
+        <option value="7">Semester 7</option>
+        <option value="8">Semester 8</option>
+
+    </select>
+
+    <table>
+
+        <thead>
+        <tr>
+            <th>Code</th>
+            <th>Subject</th>
+            <th>Credit</th>
+            <th>Grade</th>
+        </tr>
+        </thead>
+
+        <tbody id="subjectsTable">
+        </tbody>
+
+    </table>
+
+    <button onclick="calculateGPA()">
+        Calculate GPA
+    </button>
+
+    <div id="gpaResult" class="result"></div>
+
+    <hr>
+
+    <!-- CGPA -->
+
+    <h2>CGPA Summary</h2>
+
+    <table>
+
+        <thead>
+        <tr>
+            <th>Semester</th>
+            <th>GPA</th>
+        </tr>
+        </thead>
+
+        <tbody id="cgpaTable">
+        </tbody>
+
+    </table>
+
+    <div id="cgpaResult" class="result"></div>
+
+    <hr>
+
+    <!-- ARREARS -->
+
+    <h2>Pending Arrears</h2>
+
+    <table>
+
+        <thead>
+        <tr>
+            <th>Code</th>
+            <th>Subject</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+
+        <tbody id="arrearsTable">
+        </tbody>
+
+    </table>
+
+    <hr>
+
+    <!-- CGPA PREDICTOR -->
+
+    <h2>CGPA Predictor</h2>
+
+    <input
+    type="number"
+    id="targetCgpa"
+    step="0.01"
+    placeholder="Enter Target CGPA">
+
+    <button onclick="predictCGPA()">
+        Predict Required GPA
+    </button>
+
+    <div id="predictResult" class="result"></div>
+
+</div>
+
+</div>
+
+<script src="js/subjects.js"></script>
+<script src="js/app.js"></script>
+
+<script>
+
+const text =
+"Track GPA • Calculate CGPA • Manage Arrears • Predict Your Future";
+
+let i = 0;
+
+function typeWriter(){
+
+    const typing =
+    document.querySelector(".typing");
+
+    if(!typing) return;
+
+    if(i < text.length){
+
+        typing.innerHTML += text.charAt(i);
+
+        i++;
+
+        setTimeout(typeWriter,50);
+    }
+}
+
+typeWriter();
+
+</script>
+<script>
+
+
+if("serviceWorker" in navigator){
+
+    window.addEventListener("load",()=>{
+
+        navigator.serviceWorker.register("./service-worker.js")
+
+        .then(()=>{
+
+            console.log("Service Worker Registered");
+
+        })
+
+        .catch(err=>{
+
+            console.log(err);
+
+        });
+
+    });
+
+}
+
+</script>
+</body>
+</html>
