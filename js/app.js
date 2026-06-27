@@ -270,11 +270,11 @@ rows.forEach((row,index)=>{
         `${sem}_${subject.code}`
     ] = grade;
 
+    
     student.arrears =
-    student.arrears.filter(
-        a => a.code !== subject.code
-    );
-
+   student.arrears.filter(
+    a => !(a.code === subject.code && a.status === "Pending")
+);
     if (
         grade === "" ||
         subject.credit <= 0
@@ -284,6 +284,12 @@ rows.forEach((row,index)=>{
 
     if (grade === "U") {
 
+    const exists = student.arrears.find(
+        a => a.code === subject.code &&
+             a.status === "Pending"
+    );
+
+    if (!exists) {
         student.arrears.push({
             code: subject.code,
             name: subject.name,
@@ -291,8 +297,9 @@ rows.forEach((row,index)=>{
             sem: sem,
             status: "Pending"
         });
+    }
 
-        return;
+    return;
     }
 
     totalCredits +=
